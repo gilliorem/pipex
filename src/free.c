@@ -1,84 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: regillio <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/18 03:54:33 by regillio          #+#    #+#             */
+/*   Updated: 2025/09/18 03:54:35 by regillio         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/pipex.h"
 
 void	free_key_values(t_args *args)
 {
-	int	i;
-
-	i = 0;
-	if (!args->key_values)
-		return ;
-	while (args->key_values[i])
-	{
-		free(args->key_values[i]);
-		args->key_values[i] = NULL;
-		i++;
-	}
-	free(args->key_values);
-	args->key_values = NULL;
+	free_string_array(&args->key_values);
 }
 
-void free_paths(t_args *args)
+void	free_paths(t_args *args)
 {
-  int i;
-
-  i = 0;
-  if (!args->paths)
-	  return ;
-  while (args->paths[i])
-  {
-    free(args->paths[i]);
-	args->paths[i] = NULL;
-    i++;
-  }
-  free(args->paths);
-  args->paths = NULL;
+	free_string_array(&args->paths);
 }
 
-void	free_cmd_args(t_args *args)
+void	free_cmd_args(char ***cmd_args)
 {
-	int	i;
-
-	i = 0;
-	if (!args->cmd_args)
-		return ;
-	while (args->cmd_args[i])
-	{
-		free(args->cmd_args[i]);
-		args->cmd_args[i] = NULL;
-		i++;
-	}
-	free(args->cmd_args);
-	args->cmd_args = NULL;
+	free_string_array(cmd_args);
 }
 
-void	free_full_paths_binary(int i, char **full_paths_binary)
+void	free_cmd_args_one(t_args *args)
 {
-	if (!full_paths_binary)
-		return ;
-	while (i >= 0)
-	{
-		free(full_paths_binary[i]);
-		full_paths_binary[i] = NULL;
-		i--;
-	}
+	free_string_array(&args->cmd1_args);
 }
 
-void	free_everything(t_args *args)
+void	free_cmd_args_two(t_args *args)
 {
-	if (args->key_values)
-		free_key_values(args);
-	if (args->full_paths)
-		free_paths(args);
-	if (args->cmd_args)
-		free_cmd_args(args);
+	free_string_array(&args->cmd2_args);
 }
 
-void	clean_struct(t_args *args)
+void	free_full_paths(t_args *args)
 {
-	if (!args->full_paths_binary)
-		return ;
-	free(args->full_paths_binary);
-	if (!args)
-		return ;
-	free(args);
+	free_string_array(&args->full_paths);
+}
+
+void	free_full_paths_binary(char ***full_paths_binary)
+{
+	free_string_array(full_paths_binary);
 }

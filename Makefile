@@ -2,7 +2,11 @@ NAME = pipex
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 SRC_DIR = src
-SRC = main.c free.c
+SRC = main.c free.c path_to_binary.c exit.c \
+	  input_output.c child_process.c \
+	  clean_up.c \
+
+
 OBJ = $(addprefix $(SRC_DIR)/,$(SRC:.c=.o))
 INCLUDES = -Iinclude -Ilibft
 FT_DIR = libft

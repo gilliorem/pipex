@@ -109,6 +109,8 @@ we do this until... it runs ! good think about execve (we gonna see later) is th
 but first we need to take care of two things
 
 ##Questions
+
+### General
 - does ./a.out runs a exec() underneath the hood ?
 - the kernel, what is it exactly ? | returns to the kernel ?
 - start up routine is called (coded in assembly), in C exit(main(arc,arg2))
@@ -121,6 +123,19 @@ but first we need to take care of two things
 - the use of get_env() is better than get if from environ list, why ?
 - we cannot affect the env of the parent process ? can I modify my env list ?
 -
+- The proper way to exit a program ?
+- The proper way to print an error ?
+- The proper way to catch an error ?
+
+### Code implementation
+make a new fds[] variable part of my struct args...
+would it fuck me with the pipes' fds and the specific children fds ? I think so.
+should I have another struct based on fds?
+based on something else?
+fd is link with file. every thing is a file. that is why 1 fd ccan be made to write, another to read.
+Where does EXIT_FAILURE goes ? is it relative to its children
+
+
 
 Cedric's code:
 while (full_paths_binary[i])
@@ -216,3 +231,23 @@ fork for the first child that has his own run_cmds
 a second one for the second child.
 
 I have both of my forked children. 
+
+Sep 17, 23:26
+On to the best part:
+[x] child_execution 1
+[x] child_execution 1
+
+[] norm refacto
+[] mem issue 
+so we have a `printing error issue`: in the case of
+./pipex infile "wrong_cmd1" "wrong_cmd2" outfile
+the error message prints on the outfile.
+ % < infile sl | wc > output
+first cmd wrong: zsh: command not found: sl
+it creates the output file and display 0    0   0
+
+< infile sl | sl > output
+zsh: command not found: sl
+zsh: command not found: sl
+creates *an empty *outfile**
+
