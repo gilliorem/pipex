@@ -31,17 +31,17 @@ typedef struct s_args
 
 t_args	*init_args(char **argv, char **envp);
 void	get_env_path(char **env, t_args *args);
-void	update_cmd_path(t_args *args);
+int	update_cmd_path(t_args *args);
 void	get_cmd_args_list(char **argv, t_args *args);
 void	get_full_paths_binary(t_args *args, int nth_cmd);
 int		check_cmd(char *full_path_binary);
 void	run_cmds(t_args *args, int ntg_cmd);
 
 
-void	free_key_values(t_args *args);
-void	free_paths(t_args *args);
-void	free_cmd_args(t_args *args);
-void	free_full_paths_binary(int i, char **full_paths_binary);
-void	free_everything(t_args *args);
-void	clean_struct(t_args *args);
+void    free_key_values(t_args *args);
+void    free_paths(t_args *args);
+void    free_cmd_args(t_args *args);
+void    free_full_paths_binary(char ***full_paths_binary);
+void    free_everything(t_args *args);
+void    clean_struct(t_args *args);
 #endif
