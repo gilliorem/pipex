@@ -1,84 +1,58 @@
 #include "../include/pipex.h"
 
-void	free_key_values(t_args *args)
+static void free_string_array(char ***array)
 {
-	int	i;
+    int index;
 
-	i = 0;
-	if (!args->key_values)
-		return ;
-	while (args->key_values[i])
-	{
-		free(args->key_values[i]);
-		args->key_values[i] = NULL;
-		i++;
-	}
-	free(args->key_values);
-	args->key_values = NULL;
+    if (!array || !*array)
+        return ;
+    index = 0;
+    while ((*array)[index])
+    {
+        free((*array)[index]);
+        (*array)[index] = NULL;
+        index++;
+    }
+    free(*array);
+    *array = NULL;
 }
 
-void free_paths(t_args *args)
+void    free_key_values(t_args *args)
 {
-  int i;
-
-  i = 0;
-  if (!args->paths)
-	  return ;
-  while (args->paths[i])
-  {
-    free(args->paths[i]);
-	args->paths[i] = NULL;
-    i++;
-  }
-  free(args->paths);
-  args->paths = NULL;
+    free_string_array(&args->key_values);
 }
 
-void	free_cmd_args(t_args *args)
+void    free_paths(t_args *args)
 {
-	int	i;
-
-	i = 0;
-	if (!args->cmd_args)
-		return ;
-	while (args->cmd_args[i])
-	{
-		free(args->cmd_args[i]);
-		args->cmd_args[i] = NULL;
-		i++;
-	}
-	free(args->cmd_args);
-	args->cmd_args = NULL;
+    free_string_array(&args->paths);
 }
 
-void	free_full_paths_binary(int i, char **full_paths_binary)
+void    free_cmd_args(t_args *args)
 {
-	if (!full_paths_binary)
-		return ;
-	while (i >= 0)
-	{
-		free(full_paths_binary[i]);
-		full_paths_binary[i] = NULL;
-		i--;
-	}
+    free_string_array(&args->cmd1_args);
+    free_string_array(&args->cmd2_args);
 }
 
-void	free_everything(t_args *args)
+void    free_full_paths_binary(char ***full_paths_binary)
 {
-	if (args->key_values)
-		free_key_values(args);
-	if (args->full_paths)
-		free_paths(args);
-	if (args->cmd_args)
-		free_cmd_args(args);
+    free_string_array(full_paths_binary);
 }
 
-void	clean_struct(t_args *args)
+void    free_everything(t_args *args)
 {
-	if (!args->full_paths_binary)
-		return ;
-	free(args->full_paths_binary);
-	if (!args)
-		return ;
-	free(args);
+    if (!args)
+        return ;
+    free_key_values(args);
+    free_paths(args);
+    free_string_array(&args->full_paths);
+    free_cmd_args(args);
+    free_full_paths_binary(&args->full_paths_binary);
+}
+
+void    clean_struct(t_args *args)
+{
+    if (!args)
+        return ;
+    free_everything(args);
+    free(args);
 }
