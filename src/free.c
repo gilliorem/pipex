@@ -27,16 +27,6 @@ void	free_cmd_args(char ***cmd_args)
 	free_string_array(cmd_args);
 }
 
-void	free_cmd_args_one(t_args *args)
-{
-	free_string_array(&args->cmd1_args);
-}
-
-void	free_cmd_args_two(t_args *args)
-{
-	free_string_array(&args->cmd2_args);
-}
-
 void	free_full_paths(t_args *args)
 {
 	free_string_array(&args->full_paths);

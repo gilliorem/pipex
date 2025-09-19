@@ -251,3 +251,14 @@ zsh: command not found: sl
 zsh: command not found: sl
 creates *an empty *outfile**
 
+
+Sep 19, 12:48, first eval
+-
+interesting *cmd* has been run during the eval:
+- nm -u pixe 
+- valgrind --trace-children=yes ./pipex Makefile cat cat outfile
+- ./pipex qwdqdqdqd "sleep 2" xxx outfile
+- < Makefile sleep 1 | cmd > outfile
+- cp file permission
+- chmod 000 permission
+- **./pipex permission cat cat outfile (this one: error management is incorrect.)**

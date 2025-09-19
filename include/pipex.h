@@ -57,9 +57,10 @@ void	get_full_paths_binary(t_args *args, int nth_cmd);
 void	run_cmds(t_args *args, int ntg_cmd);
 
 /* Exit */
-void	exit_on_cmd_path(t_args *args);
-void	exit_on_binary(t_args *args);
-void	exit_on_cmd_list(t_args *args);
+void	print_error_message(char *cmd_name, char *msg);
+void	exit_on_cmd_path(t_args *args, char *cmd_name);
+void	exit_on_binary(t_args *args, char *cmd_name);
+void	exit_on_cmd_list(t_args *args, char *cmd_name);
 void	close_fds(t_args *args);
 
 /* input output redirection */

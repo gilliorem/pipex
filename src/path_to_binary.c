@@ -27,7 +27,7 @@ void	get_env_path(char *envp[], t_args *args)
 		i++;
 	}
 	args->env_path = NULL;
-	ft_printf("error.\ncannot find the PATH var.\n");
+	perror("error: cannot find the PATH var.\n");
 }
 
 void	update_cmd_path(t_args *args)
@@ -41,7 +41,7 @@ void	update_cmd_path(t_args *args)
 	while (args->paths[i])
 		i++;
 	i++;
-	args->full_paths = (char **)ft_calloc((i), sizeof(char *));
+	args->full_paths = (char **)ft_calloc((i + 1), sizeof(char *));
 	i = 0;
 	while (args->paths[i])
 	{
@@ -85,8 +85,5 @@ void	get_full_paths_binary(t_args *args, int nth_cmd)
 			= ft_strjoin(args->full_paths[i], cmd_args[0]);
 		i++;
 	}
-	free_cmd_args(&cmd_args);
-	free_cmd_args_one(args);
-	free_cmd_args_two(args);
 	free_full_paths(args);
 }

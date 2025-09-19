@@ -18,7 +18,10 @@ int	redirect_input(t_args *args)
 
 	fd_in = open(args->infile, O_RDONLY, 0644);
 	if (fd_in == -1)
-		return (ft_printf("error: cannot read infile.\n") & 0);
+	{
+		ft_printf("pipex: no such file or directory: %s\n", args->infile);
+		return (0);
+	}
 	if (dup2(fd_in, STDIN_FILENO == -1))
 	{
 		perror("error: input redirection failed.\n");

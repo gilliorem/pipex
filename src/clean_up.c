@@ -37,6 +37,7 @@ void	free_everything(t_args *args)
 	free_paths(args);
 	free_cmd_args(&args->cmd1_args);
 	free_cmd_args(&args->cmd2_args);
+	free_full_paths(args);
 }
 
 void	clean_struct(t_args *args)

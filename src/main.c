@@ -32,23 +32,30 @@ t_args	*init_args(char *argv[], char *envp[])
 void	run_cmds(t_args *args, int nth_cmd)
 {
 	char	**cmd_args;
+	char	*cmd_name;
 	int		i;
 
 	i = 0;
 	cmd_args = args->cmd1_args;
 	if (nth_cmd == 2)
 		cmd_args = args->cmd2_args;
-	if (!cmd_args || !cmd_args[0])
-		exit_on_cmd_list(args);
+	if (cmd_args && cmd_args[0] && *cmd_args[0])
+		cmd_name = cmd_args[0];
+	else if (args->argv[nth_cmd + 1])
+		cmd_name = args->argv[nth_cmd + 1];
+	else
+		cmd_name = "";
+	if (!cmd_args || !cmd_args[0] || !*cmd_args[0])
+		exit_on_cmd_list(args, cmd_name);
 	if (!args->full_paths_binary)
-		exit_on_cmd_path(args);
+		exit_on_cmd_path(args, cmd_name);
 	while (args->full_paths_binary[i])
 	{
 		if (access(args->full_paths_binary[i], F_OK | X_OK) == 0)
 			execve(args->full_paths_binary[i], cmd_args, args->envp);
 		i++;
 	}
-	exit_on_binary(args);
+	exit_on_binary(args, cmd_name);
 }
 
 int	pipe_check(t_args *args)
